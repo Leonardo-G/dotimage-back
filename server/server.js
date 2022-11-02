@@ -1,5 +1,6 @@
 const express = require("express");
 const sequelize = require("../db/config");
+const dotenv = require("dotenv");
 
 class Server {
     constructor(){
@@ -16,6 +17,7 @@ class Server {
     }
 
     middlewares(){
+        dotenv.config()
         this.app.use( express.json() );
     }
 

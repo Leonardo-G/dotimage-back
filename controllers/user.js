@@ -1,6 +1,7 @@
 const { request, response } = require("express");
 const brcyptjs = require("bcryptjs");
 const User = require("../models/User");
+const { generateJWT } = require("../utils/validateJWT");
 
 const newUser = async ( req = request, res = response ) => {
     const { name, lastname = "", email, password } = req.body;
@@ -21,7 +22,20 @@ const newUser = async ( req = request, res = response ) => {
     const user = new User({ name, lastname, email, password: hash });
     await user.save();
 
-    return res.status(201).json( user );
+    const userToken = await generateJWT( user.id, user.name ); // Devuelve "ERROR", en caso de que haya un error al generar el token
+
+    if ( userToken === "ERROR" ){
+        return res.status(500).json({
+            msg: "Error al validar el token"
+        })
+    }
+
+    return res.status(201).json({
+        name: user.name,
+        lastname: user.name,
+        email: user.email,
+        token: userToken
+    });
 }
 
 module.exports = {
