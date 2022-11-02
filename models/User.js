@@ -8,20 +8,24 @@ const User = sequelize.define("User", {
         primaryKey: true
     },
     name: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING(20),
         allowNull: false
     },
     lastName: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING(20),
         defaultValue: ""
     },
     email: {
-        type: DataTypes.TEXT,
-        allowNull: false
+        type: DataTypes.STRING(50),
+        unique: true
     },
     password: {
         type: DataTypes.TEXT,
         allowNull: false
+    },
+    imageUrl: {
+        type: DataTypes.TEXT,
+        defaultValue: ""
     }
 })
 

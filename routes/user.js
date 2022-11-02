@@ -1,12 +1,27 @@
 const express = require("express");
-const User = require("../models/User");
+const { check } = require("express-validator");
+const { newUser } = require("../controllers/user");
+const { validateBody } = require("../middlewares/validator");
 
 const router = express.Router();
 
-router.get("/", async ( req, res ) => {
-    const user = await User.create({name: "Leonardo", lastname: "Guanuco", email: "Corr", password: "12345" })
-    await user.save();
-    console.log(user)
-})
+router.post ( "/new-user", [
+    check("name")
+        .exists()
+        .withMessage("El Nombre es requerido")
+        .isLength({ min: 4, max: 20 })
+        .withMessage("Se requiere minimo 4 caracteres y con un máximo de 20 carácteres"),
+    check("email")
+        .exists()
+        .withMessage("El email es requerido")
+        .isEmail()
+        .withMessage("Tiene que ser un email válido"),
+    check("password")
+        .exists()
+        .withMessage("Se requiere la contraseña")
+        .isLength({ min: 6 })
+        .withMessage("Se requiere como mínimo 6 caracteres"),
+    validateBody
+], newUser )
 
 module.exports = router;
