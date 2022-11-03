@@ -8,7 +8,7 @@ const newUser = async ( req = request, res = response ) => {
     let { name, lastname = "", email, password } = req.body;
 
     password = hashPassword( password );
-    console.log(password)
+    
     const isExist = await User.findOne({
         where: { email: email }
     })
