@@ -1,6 +1,6 @@
 const express = require("express");
 const { check } = require("express-validator");
-const { newUser, compareToken } = require("../controllers/user");
+const { newUser, compareToken, loginUser } = require("../controllers/user");
 const { validateBody } = require("../middlewares/validator");
 const { compareJWT } = require("../utils/validateJWT");
 
@@ -28,5 +28,19 @@ router.post ( "/new-user", [
 router.post( "/validate-token", [
     compareJWT
 ], compareToken )
+
+router.post( "/login", [
+    check("email")
+        .exists()
+        .withMessage("El email es requerido")
+        .isEmail()
+        .withMessage("Tiene que ser un email válido"),
+    check("password")
+        .exists()
+        .withMessage("Se requiere la contraseña")
+        .isLength({ min: 6 })
+        .withMessage("Se requiere como mínimo 6 caracteres"),
+    validateBody
+], loginUser )
 
 module.exports = router;

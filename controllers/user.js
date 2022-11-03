@@ -1,15 +1,14 @@
 const { request, response } = require("express");
-const brcyptjs = require("bcryptjs");
 
 const User = require("../models/User");
+const { hashPassword, comparePassword } = require("../utils/passwordHash");
 const { generateJWT } = require("../utils/validateJWT");
 
 const newUser = async ( req = request, res = response ) => {
-    const { name, lastname = "", email, password } = req.body;
+    let { name, lastname = "", email, password } = req.body;
 
-    const salt = brcyptjs.genSaltSync(10);
-    const hash = brcyptjs.hashSync(password, salt);
-
+    password = hashPassword( password );
+    console.log(password)
     const isExist = await User.findOne({
         where: { email: email }
     })
@@ -20,7 +19,7 @@ const newUser = async ( req = request, res = response ) => {
         })
     }
 
-    const user = new User({ name, lastname, email, password: hash });
+    const user = new User({ name, lastname, email, password });
     await user.save();
 
     const userToken = await generateJWT( user.id, user.name ); // Devuelve "ERROR", en caso de que haya un error al generar el token
@@ -69,7 +68,48 @@ const compareToken = async ( req = request, res = response ) => {
     });
 }
 
+const loginUser = async ( req = request, res = response ) => {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({
+        where: { email }
+    })
+
+    if ( !user ) {
+        return res.status(401).json({
+            msg: "Contraseña/email incorrecta",
+            error: true,
+            type: "ERROR | USER NO ENCONTRADO"
+        })
+    }
+
+    if ( !comparePassword( password, user.password ) ){
+        return res.status(401).json({
+            msg: "Contraseña/email incorrecta",
+            error: true,
+            type: "ERROR | INVALID PASSWORD"
+        })
+    }
+
+    const userToken = await generateJWT( user.id, user.name ); // Devuelve "ERROR", en caso de que haya un error al generar el token
+
+    if ( userToken === "ERROR" ){
+        return res.status(500).json({
+            msg: "Error al validar el token"
+        })
+    }
+
+    return res.status(201).json({
+        name: user.name,
+        lastname: user.name,
+        email: user.email,
+        token: userToken
+    });
+
+}
+
 module.exports = {
     newUser,
-    compareToken
+    compareToken,
+    loginUser
 }
