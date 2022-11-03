@@ -1,7 +1,8 @@
 const express = require("express");
 const { check } = require("express-validator");
-const { newUser } = require("../controllers/user");
+const { newUser, compareToken } = require("../controllers/user");
 const { validateBody } = require("../middlewares/validator");
+const { compareJWT } = require("../utils/validateJWT");
 
 const router = express.Router();
 
@@ -23,5 +24,9 @@ router.post ( "/new-user", [
         .withMessage("Se requiere como mínimo 6 caracteres"),
     validateBody
 ], newUser )
+
+router.post( "/validate-token", [
+    compareJWT
+], compareToken )
 
 module.exports = router;
