@@ -1,46 +1,13 @@
 const express = require("express");
-const { check } = require("express-validator");
 const { newUser, compareToken, loginUser } = require("../controllers/user");
-const { validateBody } = require("../middlewares/validator");
-const { compareJWT } = require("../utils/validateJWT");
+const { postNewUser, postValidateToken, postLogin } = require("../middlewares/user");
 
 const router = express.Router();
 
-router.post ( "/new-user", [
-    check("name")
-        .exists()
-        .withMessage("El Nombre es requerido")
-        .isLength({ min: 4, max: 20 })
-        .withMessage("Se requiere minimo 4 caracteres y con un máximo de 20 carácteres"),
-    check("email")
-        .exists()
-        .withMessage("El email es requerido")
-        .isEmail()
-        .withMessage("Tiene que ser un email válido"),
-    check("password")
-        .exists()
-        .withMessage("Se requiere la contraseña")
-        .isLength({ min: 6 })
-        .withMessage("Se requiere como mínimo 6 caracteres"),
-    validateBody
-], newUser )
+router.post ( "/new-user", postNewUser, newUser )
 
-router.post( "/validate-token", [
-    compareJWT
-], compareToken )
+router.post( "/validate-token", postValidateToken, compareToken )
 
-router.post( "/login", [
-    check("email")
-        .exists()
-        .withMessage("El email es requerido")
-        .isEmail()
-        .withMessage("Tiene que ser un email válido"),
-    check("password")
-        .exists()
-        .withMessage("Se requiere la contraseña")
-        .isLength({ min: 6 })
-        .withMessage("Se requiere como mínimo 6 caracteres"),
-    validateBody
-], loginUser )
+router.post( "/login", postLogin, loginUser )
 
 module.exports = router;
