@@ -1,11 +1,11 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db/config");
 
-const Favorite = sequelize.define("Favorite", {
+const Saved = sequelize.define( "Saved", {
     id: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
         primaryKey: true,
+        autoIncrement: true,
         unique: true
     },
     user_id: {
@@ -16,7 +16,7 @@ const Favorite = sequelize.define("Favorite", {
         }
     },
     // id del archivo 
-    favoriteId: {
+    savedId: {
         type: DataTypes.TEXT,
         allowNull: false,
     },
@@ -30,8 +30,9 @@ const Favorite = sequelize.define("Favorite", {
         type: DataTypes.TEXT,
         allowNull: false
     }
-}, {
-    timestamps: false
+
+},{
+    timestamps: true
 })
 
-module.exports = Favorite
+module.exports = Saved;

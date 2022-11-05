@@ -1,7 +1,7 @@
 const express = require("express");
 const sequelize = require("../db/config");
 const dotenv = require("dotenv");
-const { userRoute, favoriteRoute } = require("../routes");
+const { userRoute, favoriteRoute, saveRoute } = require("../routes");
 
 class Server {
     constructor(){
@@ -9,7 +9,8 @@ class Server {
         this.app = express();
         this.router = {
             user: "/api/user",
-            favorite: "/api/favorite"
+            favorite: "/api/favorite",
+            save: "/api/saved"
         }
 
         this.middlewares();
@@ -36,6 +37,7 @@ class Server {
     routes(){
         this.app.use( this.router.user, userRoute );
         this.app.use( this.router.favorite, favoriteRoute );
+        this.app.use( this.router.save, saveRoute );
     }
 
     server(){
