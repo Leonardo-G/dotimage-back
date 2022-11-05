@@ -30,7 +30,24 @@ const getSavedForUser = async ( req = request, res = response ) => {
     return res.status(200).json(saved);
 }
 
+const deleteSavedForUser = async ( req = request, res = response ) => {
+    
+    const { idMedia } = req.params;
+
+    await Saved.destroy({
+        where: {
+            savedId: idMedia,
+            user_id: req.id
+        }
+    })
+
+    return res.status(200).json({
+        msg: "ELIMINADO"
+    })
+}
+
 module.exports = {
     newSaved,
-    getSavedForUser
+    getSavedForUser,
+    deleteSavedForUser
 }

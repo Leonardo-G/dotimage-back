@@ -29,7 +29,23 @@ const getFavoritesForUser = async ( req = request, res = response ) => {
     return res.status(200).json(favorites);
 }
 
+const deleteFavoriteForUser = async ( req = request, res = response ) => {
+    const { idMedia } = req.params;
+
+    await Favorite.destroy({
+        where: {
+            favoriteId: idMedia,
+            user_id: req.id
+        }
+    })
+
+    return res.status(200).json({
+        msg: "ELIMINADO"
+    })
+}
+
 module.exports = {
     newFavorite,
-    getFavoritesForUser
+    getFavoritesForUser,
+    deleteFavoriteForUser
 }

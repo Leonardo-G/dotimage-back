@@ -22,7 +22,16 @@ const getFavorites = [
     compareJWT
 ]
 
+const deleteFavorites = [
+    check("idMedia")
+        .exists()
+        .withMessage("Se necesita el ID del archivo media"),
+    validateBody,
+    compareJWT
+]
+
 module.exports = { 
     postFavorite,
-    getFavorites
+    getFavorites,
+    deleteFavorites
 }

@@ -22,7 +22,16 @@ const getSaved = [
     compareJWT
 ]
 
+const deleteSaved = [
+    check("idMedia")
+        .exists()
+        .withMessage("Se necesita el ID del archivo media"),
+    validateBody,
+    compareJWT
+]
+
 module.exports = { 
     postSaved,
-    getSaved
+    getSaved,
+    deleteSaved
 }
