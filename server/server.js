@@ -1,13 +1,15 @@
 const express = require("express");
 const sequelize = require("../db/config");
 const dotenv = require("dotenv");
+const { userRoute, favoriteRoute } = require("../routes");
 
 class Server {
     constructor(){
         this.PORT = 8000;
         this.app = express();
         this.router = {
-            user: "/api/user"
+            user: "/api/user",
+            favorite: "/api/favorite"
         }
 
         this.middlewares();
@@ -32,7 +34,8 @@ class Server {
     }
 
     routes(){
-        this.app.use( this.router.user, require("../routes/user.js") );
+        this.app.use( this.router.user, userRoute );
+        this.app.use( this.router.favorite, favoriteRoute );
     }
 
     server(){

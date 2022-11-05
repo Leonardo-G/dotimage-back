@@ -8,21 +8,24 @@ const Favorite = sequelize.define("Favorite", {
         primaryKey: true,
         unique: true
     },
-    userId: {
+    user_id: {
         type: DataTypes.INTEGER,
         references: {
-            model: "User",
+            model: "users",
             key: "id"
         }
     },
+    // id del archivo 
     favoriteId: {
         type: DataTypes.TEXT,
         allowNull: false,
     },
+    // Tipo de archivo
     type: {
         type: DataTypes.STRING(10),
         allowNull: false
     },
+    //Url de del archivo
     urlImage: {
         type: DataTypes.TEXT,
         allowNull: false

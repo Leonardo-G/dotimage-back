@@ -5,8 +5,8 @@ const Server = require("./server/server");
 
 const newServer = new Server();
 
-Favorite.belongsTo( User, { constraints: true, onDelete: "CASCADE" } );
 User.hasMany( Favorite );
+Favorite.belongsTo( User, { constraints: true, onDelete: "CASCADE" } );
 
 sequelize.sync({force: true});
 sequelize.authenticate()
