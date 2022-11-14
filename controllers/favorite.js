@@ -24,7 +24,7 @@ const getFavoritesForUser = async ( req = request, res = response ) => {
         }
     })
 
-    favorites = favorites.map( data => new FavoriteAllDTO( data ) )
+    favorites = favorites.map( data => new FavoriteAllDTO( data ) );
 
     return res.status(200).json(favorites);
 }
@@ -47,5 +47,5 @@ const deleteFavoriteForUser = async ( req = request, res = response ) => {
 module.exports = {
     newFavorite,
     getFavoritesForUser,
-    deleteFavoriteForUser
+    deleteFavoriteForUser,
 }

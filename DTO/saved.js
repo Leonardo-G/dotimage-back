@@ -1,7 +1,7 @@
 class SavedAllDTO {
     constructor ( data ) {
         this.id = data.id;
-        this.favoriteId = data.savedId;
+        this.savedId = data.savedId;
         this.type = data.type;
         this.urlImage = data.urlImage;
     }

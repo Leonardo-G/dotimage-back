@@ -1,7 +1,13 @@
 const express = require("express");
 const sequelize = require("../db/config");
 const dotenv = require("dotenv");
-const { userRoute, favoriteRoute, saveRoute } = require("../routes");
+const cors = require("cors"); 
+
+const { 
+    userRoute, 
+    favoriteRoute, 
+    saveRoute
+} = require("../routes");
 
 class Server {
     constructor(){
@@ -21,6 +27,7 @@ class Server {
 
     middlewares(){
         dotenv.config()
+        this.app.use( cors() )
         this.app.use( express.json() );
     }
 

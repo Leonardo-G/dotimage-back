@@ -15,7 +15,9 @@ const newUser = async ( req = request, res = response ) => {
 
     if ( isExist ) {
         return res.status(400).json({
-            msg: `El usuario con el correo ${ email }, ya existe`
+            msg: `El usuario con el correo ${ email }, ya existe`,
+            error: true,
+            type: "ERROR | USER EXIST"
         })
     }
 
@@ -32,8 +34,8 @@ const newUser = async ( req = request, res = response ) => {
 
     return res.status(201).json({
         name: user.name,
-        lastname: user.name,
         email: user.email,
+        imageUrl: user.imageUrl,
         token: userToken
     });
 }
@@ -56,14 +58,16 @@ const compareToken = async ( req = request, res = response ) => {
 
     if ( userToken === "ERROR" ){
         return res.status(500).json({
-            msg: "Error al validar el token"
+            msg: "Error de validación, intentelo de nuevo más tarde",
+            error: true,
+            type: "ERROR | VALIDATION"
         })
     }
 
     return res.status(201).json({
         name: user.name,
-        lastname: user.name,
         email: user.email,
+        imageUrl: user.imageUrl,
         token: userToken
     });
 }
@@ -101,7 +105,6 @@ const loginUser = async ( req = request, res = response ) => {
 
     return res.status(201).json({
         name: user.name,
-        lastname: user.name,
         email: user.email,
         token: userToken
     });

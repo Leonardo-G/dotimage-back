@@ -6,14 +6,14 @@ const newSaved = async ( req = request, res = response ) => {
 
     const { savedId, type, urlImage } = req.body;
 
-    const saved = new Favorite({
+    const saved = new Saved({
         user_id: req.id,
         savedId,
         type,
         urlImage
     })
 
-    await favorite.save();
+    await saved.save();
 
     return res.status(201).json( saved );
 }

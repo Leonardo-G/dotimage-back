@@ -1,13 +1,24 @@
 const express = require("express");
-const { newFavorite, getFavoritesForUser } = require("../controllers/favorite");
-const { postFavorite, getFavorites } = require("../middlewares/favorite");
+
+const { 
+    newFavorite, 
+    getFavoritesForUser, 
+    deleteFavoriteForUser
+} = require("../controllers/favorite");
+
+const { 
+    postFavorite, 
+    getFavorites, 
+    deleteFavorites
+} = require("../middlewares/favorite");
 
 const router = express.Router();
 
-router.post( "/new", postFavorite, newFavorite )
+router.post( "/new", postFavorite, newFavorite );
 
-router.get( "/", getFavorites, getFavoritesForUser )
+//Obtener todos los favoritos del usuario;
+router.get( "/", getFavorites, getFavoritesForUser );
 
-
+router.delete( "/:idMedia", deleteFavorites, deleteFavoriteForUser );
 
 module.exports = router;

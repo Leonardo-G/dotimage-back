@@ -19,10 +19,10 @@ const generateJWT = ( id, name ) => {   // es necesario el ID y el nombre del ob
 const compareJWT = ( req = request, res = response, next ) => {
 
     const token = req.headers["token-auth"];
+    console.log(token)
 
     jwt.verify( token, process.env.PALABRA_SECRET, ( err, tokenDecoded ) => {
         if ( err ){
-            
             return res.status(401).json({
                 msg: "Error en la autenticación del token",
                 error: true,

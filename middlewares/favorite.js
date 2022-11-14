@@ -9,7 +9,7 @@ const postFavorite = [
         .withMessage("Se necesita el Id del archivo"),
     check("type")
         .exists()
-        .isIn(["image", "video", "gifs", "sticker"])
+        .isIn(["image", "videos", "gifs", "sticker"])
         .withMessage("Tiene que ser un TYPE válido"),
     check("urlImage")
         .exists()
@@ -33,5 +33,5 @@ const deleteFavorites = [
 module.exports = { 
     postFavorite,
     getFavorites,
-    deleteFavorites
+    deleteFavorites,
 }
