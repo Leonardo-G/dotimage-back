@@ -33,7 +33,6 @@ class Server {
 
     async sequelizeServer(){
         try {
-            await sequelize.sync({ force: true })
             await sequelize.authenticate();
             console.log("Base de datos conectado");
         } catch (error) {

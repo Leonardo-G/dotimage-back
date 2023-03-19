@@ -11,7 +11,7 @@ const Saved = sequelize.define( "Saved", {
     user_id: {
         type: DataTypes.INTEGER,
         references: {
-            model: "users",
+            model: "Users",
             key: "id"
         }
     },
