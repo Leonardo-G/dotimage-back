@@ -1,0 +1,24 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: dotimages
+    src: ./
+    engine: nodejs16
+    run: "node app.js"
+    presets:
+      env:
+        - name: PALABRA_SECRET
+          description: Palabra secreta para el JWT
+          default: "PALABRA_SECRETA_DOT_IMAGES"
+        - name: DB_USER
+          description: Nombre de usuario de la base de datos
+          default: "admin"
+        - name: DB_PASSWORD
+          description: password
+          default: "RmTQxfpN"
+        - name: DB_HOST
+          description: host
+          default: "mysql-116474-0.cloudclusters.net"
+        - name: DB_PORT
+          description: port
+          default: "18245"

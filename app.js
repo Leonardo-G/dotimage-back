@@ -14,7 +14,6 @@ Favorite.belongsTo( User, { constraints: true, onDelete: "CASCADE" } );
 User.hasMany( Saved );
 Saved.belongsTo( User, { constraints: true, onDelete: "CASCADE" } );
 
-sequelize.sync();
 sequelize.authenticate()
     .then( c => console.log("Conectado") )
     .catch(e => console.log("ERROR\n", e))
