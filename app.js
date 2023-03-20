@@ -3,7 +3,11 @@ const Favorite = require("./models/Favorite");
 const Saved = require("./models/Saved");
 const User = require("./models/User");
 const Server = require("./server/server");
+const express = require("express");
+const cors = require("cors"); 
+const app = express();
 
+app.use( cors() );
 const newServer = new Server();
 
 //Uno a muchos USER ==> Favorite

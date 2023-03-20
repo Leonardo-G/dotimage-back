@@ -1,7 +1,6 @@
 const express = require("express");
 const sequelize = require("../db/config");
 const dotenv = require("dotenv");
-const cors = require("cors"); 
 
 const { 
     userRoute, 
@@ -21,8 +20,7 @@ class Server {
 
         this.middlewares();
         // this.sequelizeServer()
-        this.routes()
-    
+        this.routes();
     }
 
     middlewares(){
