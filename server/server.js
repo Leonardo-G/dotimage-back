@@ -27,6 +27,7 @@ class Server {
 
     middlewares(){
         dotenv.config()
+        this.app.use( cors() )
         this.app.use( express.json() );
     }
 
