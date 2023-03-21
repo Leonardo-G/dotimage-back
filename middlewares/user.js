@@ -1,8 +1,11 @@
+const cors = require("cors");
+
 const { check } = require("express-validator");
 const { compareJWT } = require("../utils/validateJWT");
 const { validateBody } = require("./validator");
 
 const postNewUser = [
+    cors(),
     check("name")
         .exists()
         .withMessage("El Nombre es requerido")

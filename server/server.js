@@ -11,7 +11,7 @@ const {
 
 class Server {
     constructor(){
-        this.PORT = 8000;
+        this.PORT = process.env.PORT || 8000;
         this.app = express();
         this.router = {
             user: "/api/user",
@@ -27,7 +27,6 @@ class Server {
 
     middlewares(){
         dotenv.config()
-        this.app.use( cors() )
         this.app.use( express.json() );
     }
 
