@@ -4,8 +4,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants/jwtConstants';
-import { ConfigModule } from '@nestjs/config';
+import { jwtConstants } from './constants/constants';
 
 @Module({
   imports: [
@@ -17,10 +16,6 @@ import { ConfigModule } from '@nestjs/config';
       signOptions: {
         expiresIn: '7d',
       },
-    }),
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: '.env',
     }),
   ],
   controllers: [AppController],

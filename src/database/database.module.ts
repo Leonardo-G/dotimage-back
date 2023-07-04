@@ -1,12 +1,24 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { defaultOptions } from './config/db.config';
+import { ConfigModule } from '@nestjs/config';
+
 import { User } from 'src/users/model/user.model';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: `.env`,
+      isGlobal: true,
+    }),
     SequelizeModule.forRoot({
-      ...defaultOptions,
+      dialect: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: 'dotimages',
+      synchronize: true,
+      autoLoadModels: true,
       models: [User],
     }),
   ],

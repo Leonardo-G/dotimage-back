@@ -1,8 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { User } from '../model/user.model';
 import { InjectModel } from '@nestjs/sequelize';
-import { UserCreateDTO } from '../dto/user.dto';
 import { JwtService } from '@nestjs/jwt';
+
+import { User } from '../model/user.model';
+import { UserCreateDTO } from '../dto/user.dto';
 
 @Injectable()
 export class UsersService {
