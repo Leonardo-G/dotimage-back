@@ -1,10 +1,11 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants/constants';
+import { jwtConstants } from './common/constants/constants';
+import { CompareTokenMiddleware } from './common/middleware/compare-token/compare-token.middleware';
 
 @Module({
   imports: [
@@ -21,4 +22,10 @@ import { jwtConstants } from './constants/constants';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(CompareTokenMiddleware)
+      .forRoutes({ path: 'users/validate-token', method: RequestMethod.POST });
+  }
+}
