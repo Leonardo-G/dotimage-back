@@ -10,6 +10,7 @@ import {
   Table,
   Unique,
 } from 'sequelize-typescript';
+import { Favorites } from 'src/favorites/model/favorites.model';
 import { Saved } from 'src/saved/model/saved.model';
 
 @Table
@@ -55,4 +56,7 @@ export class User extends Model {
 
   @HasMany(() => Saved)
   saved: Saved[];
+
+  @HasMany(() => Favorites)
+  favorites: Favorites[];
 }

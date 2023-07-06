@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 
 import { User } from 'src/users/model/user.model';
 import { Saved } from 'src/saved/model/saved.model';
+import { Favorites } from 'src/favorites/model/favorites.model';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { Saved } from 'src/saved/model/saved.model';
       database: 'dotimages',
       synchronize: true,
       autoLoadModels: true,
-      models: [User, Saved],
+      models: [User, Saved, Favorites],
     }),
   ],
 })

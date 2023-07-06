@@ -8,6 +8,7 @@ import { jwtConstants } from './common/constants/constants';
 import { CompareTokenMiddleware } from './common/middleware/compare-token/compare-token.middleware';
 import { SavedModule } from './saved/saved.module';
 import { SavedController } from './saved/controller/saved.controller';
+import { FavoritesModule } from './favorites/favorites.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { SavedController } from './saved/controller/saved.controller';
       },
     }),
     SavedModule,
+    FavoritesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
