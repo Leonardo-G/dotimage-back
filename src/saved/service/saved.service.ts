@@ -20,4 +20,25 @@ export class SavedService {
 
     return saved;
   }
+
+  async getSavedForUser(id: number): Promise<Saved[]> {
+    const saved = await this.savedModel.findAll({
+      where: {
+        user_id: id,
+      },
+    });
+
+    return saved;
+  }
+
+  async deleteById(id: number, user_id): Promise<{ msg: string }> {
+    await this.savedModel.destroy({
+      where: {
+        id,
+        user_id,
+      },
+    });
+
+    return { msg: 'ELIMINADO' };
+  }
 }

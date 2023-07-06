@@ -1,3 +1,4 @@
+import { PickType } from '@nestjs/mapped-types';
 import { IsIn, IsNotEmpty } from 'class-validator';
 
 export class SavedCreateDTO {
