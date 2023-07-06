@@ -17,8 +17,8 @@ export class Saved extends Model {
   @PrimaryKey
   @AutoIncrement
   @Unique
-  @Column
-  id: string;
+  @Column(DataType.INTEGER)
+  id: number;
 
   @ForeignKey(() => User)
   @Column(DataType.INTEGER)
