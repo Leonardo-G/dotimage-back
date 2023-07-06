@@ -1,13 +1,16 @@
 import {
   AllowNull,
+  BelongsTo,
   Column,
   DataType,
   Default,
+  HasMany,
   Model,
   PrimaryKey,
   Table,
   Unique,
 } from 'sequelize-typescript';
+import { Saved } from 'src/saved/model/saved.model';
 
 @Table
 export class User extends Model {
@@ -49,4 +52,7 @@ export class User extends Model {
     type: DataType.TEXT,
   })
   imageUrl: string;
+
+  @HasMany(() => Saved)
+  saved: Saved[];
 }

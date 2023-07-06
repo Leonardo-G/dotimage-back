@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
@@ -6,6 +6,8 @@ import { DatabaseModule } from './database/database.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './common/constants/constants';
 import { CompareTokenMiddleware } from './common/middleware/compare-token/compare-token.middleware';
+import { SavedModule } from './saved/saved.module';
+import { SavedController } from './saved/controller/saved.controller';
 
 @Module({
   imports: [
@@ -18,14 +20,13 @@ import { CompareTokenMiddleware } from './common/middleware/compare-token/compar
         expiresIn: '7d',
       },
     }),
+    SavedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(CompareTokenMiddleware)
-      .forRoutes({ path: 'users/validate-token', method: RequestMethod.POST });
+    consumer.apply(CompareTokenMiddleware).forRoutes(SavedController);
   }
 }

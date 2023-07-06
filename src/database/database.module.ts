@@ -3,6 +3,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 
 import { User } from 'src/users/model/user.model';
+import { Saved } from 'src/saved/model/saved.model';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { User } from 'src/users/model/user.model';
       database: 'dotimages',
       synchronize: true,
       autoLoadModels: true,
-      models: [User],
+      models: [User, Saved],
     }),
   ],
 })
