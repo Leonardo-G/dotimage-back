@@ -32,11 +32,11 @@ export class FavoritesService {
     return favorites;
   }
 
-  async deleteById(id: number, id_user: number): Promise<{ msg: string }> {
+  async deleteById(id: number, user_id: number): Promise<{ msg: string }> {
     await this.favoritesModel.destroy({
       where: {
         id,
-        id_user,
+        user_id,
       },
     });
 
