@@ -20,7 +20,6 @@ export class UsersController {
   @Post('validate-token')
   validate(@Req() req: Request & { id: string }) {
     try {
-      console.log(req.id);
       return this.usersService.validateToken(req.id);
     } catch (error) {
       throw new HttpException(error.message, error.status);

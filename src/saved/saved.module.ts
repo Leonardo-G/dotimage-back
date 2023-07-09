@@ -1,11 +1,18 @@
 import { Module } from '@nestjs/common';
-import { SequelizeModule } from '@nestjs/sequelize';
-import { Saved } from './model/saved.model';
+import { Saved, SavedSchema } from './model/saved.model';
 import { SavedController } from './controller/saved.controller';
 import { SavedService } from './service/saved.service';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  // imports: [SequelizeModule.forFeature([Saved])],
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: Saved.name,
+        schema: SavedSchema,
+      },
+    ]),
+  ],
   controllers: [SavedController],
   providers: [SavedService],
 })

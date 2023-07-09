@@ -21,7 +21,7 @@ import { FavoritesModule } from './favorites/favorites.module';
         expiresIn: '7d',
       },
     }),
-    // SavedModule,
+    SavedModule,
     // FavoritesModule,
   ],
   controllers: [AppController],

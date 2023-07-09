@@ -1,37 +1,35 @@
-import {
-  AllowNull,
-  AutoIncrement,
-  BelongsTo,
-  Column,
-  DataType,
-  ForeignKey,
-  Model,
-  PrimaryKey,
-  Table,
-  Unique,
-} from 'sequelize-typescript';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { User } from 'src/users/model/user.model';
 
-@Table
-export class Saved extends Model {
-  @PrimaryKey
-  @AutoIncrement
-  @Unique
-  @Column(DataType.INTEGER)
-  id: number;
+export type SavedDocument = HydratedDocument<Saved>;
 
-  @Column(DataType.INTEGER)
-  user_id: number;
+@Schema()
+export class Saved {
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'User',
+  })
+  user_id: User;
 
-  @AllowNull(false)
-  @Column(DataType.TEXT)
+  @Prop({
+    type: String,
+    required: true,
+  })
   savedId: string;
 
-  @AllowNull(false)
-  @Column(DataType.TEXT)
+  @Prop({
+    type: String,
+    enum: ['image', 'video', 'gifs', 'sticker'],
+    required: true,
+  })
   type: string;
 
-  @AllowNull(false)
-  @Column(DataType.TEXT)
+  @Prop({
+    type: String,
+    required: true,
+  })
   urlImage: string;
 }
+
+export const SavedSchema = SchemaFactory.createForClass(Saved);

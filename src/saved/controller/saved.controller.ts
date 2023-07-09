@@ -8,10 +8,12 @@ import {
   ParseIntPipe,
   Post,
   Req,
+  ValidationPipe,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { SavedCreateDTO } from 'src/saved/dto/saved.dto';
 import { SavedService } from '../service/saved.service';
+import { ValidateMongoIdPipe } from '../pipe/validate-mongo-id.pipe';
 
 @Controller('saved')
 export class SavedController {
@@ -20,7 +22,7 @@ export class SavedController {
   @Post()
   newSaved(
     @Body() savedCreateDTO: SavedCreateDTO,
-    @Req() req: Request & { id: number },
+    @Req() req: Request & { id: string },
   ) {
     try {
       return this.savedService.createSaved(savedCreateDTO, req.id);
@@ -30,7 +32,7 @@ export class SavedController {
   }
 
   @Get()
-  getSaved(@Req() req: Request & { id: number }) {
+  getSaved(@Req() req: Request & { id: string }) {
     try {
       return this.savedService.getSavedForUser(req.id);
     } catch (error) {
@@ -39,12 +41,9 @@ export class SavedController {
   }
 
   @Delete(':id')
-  deleteSaved(
-    @Param('id', ParseIntPipe) id: number,
-    @Req() req: Request & { id: number },
-  ) {
+  deleteSaved(@Param('id', ValidateMongoIdPipe) id: string) {
     try {
-      return this.savedService.deleteById(id, req.id);
+      return this.savedService.deleteById(id);
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }
