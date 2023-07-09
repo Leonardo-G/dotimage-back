@@ -22,7 +22,7 @@ import { FavoritesModule } from './favorites/favorites.module';
       },
     }),
     SavedModule,
-    // FavoritesModule,
+    FavoritesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

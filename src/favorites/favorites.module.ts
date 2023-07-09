@@ -1,11 +1,18 @@
 import { Module } from '@nestjs/common';
 import { FavoritesController } from './controller/favorites.controller';
 import { FavoritesService } from './service/favorites.service';
-import { SequelizeModule } from '@nestjs/sequelize';
-import { Favorites } from './model/favorites.model';
+import { Favorites, FavoritesSchema } from './model/favorites.model';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  // imports: [SequelizeModule.forFeature([Favorites])],
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: Favorites.name,
+        schema: FavoritesSchema,
+      },
+    ]),
+  ],
   controllers: [FavoritesController],
   providers: [FavoritesService],
 })

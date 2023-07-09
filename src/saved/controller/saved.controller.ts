@@ -13,7 +13,7 @@ import {
 import { Request } from 'express';
 import { SavedCreateDTO } from 'src/saved/dto/saved.dto';
 import { SavedService } from '../service/saved.service';
-import { ValidateMongoIdPipe } from '../pipe/validate-mongo-id.pipe';
+import { ValidateMongoIdPipe } from '../../common/pipe/validate-mongo-id.pipe';
 
 @Controller('saved')
 export class SavedController {

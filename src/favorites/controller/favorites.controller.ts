@@ -12,6 +12,7 @@ import {
 import { FavoriteCreateDTO } from '../dto/favorites.dto';
 import { Request } from 'express';
 import { FavoritesService } from '../service/favorites.service';
+import { ValidateMongoIdPipe } from 'src/common/pipe/validate-mongo-id.pipe';
 
 @Controller('favorites')
 export class FavoritesController {
@@ -20,7 +21,7 @@ export class FavoritesController {
   @Post()
   createFavorite(
     @Body() favoriteCreateDTO: FavoriteCreateDTO,
-    @Req() req: Request & { id: number },
+    @Req() req: Request & { id: string },
   ) {
     try {
       return this.favoritesService.newFavorite(favoriteCreateDTO, req.id);
@@ -30,7 +31,7 @@ export class FavoritesController {
   }
 
   @Get()
-  getFavorites(@Req() req: Request & { id: number }) {
+  getFavorites(@Req() req: Request & { id: string }) {
     try {
       return this.favoritesService.getAllById(req.id);
     } catch (error) {
@@ -39,12 +40,9 @@ export class FavoritesController {
   }
 
   @Delete(':id')
-  deleteFavorite(
-    @Param('id', ParseIntPipe) id: number,
-    @Req() req: Request & { id: number },
-  ) {
+  deleteFavorite(@Param('id', ValidateMongoIdPipe) id: string) {
     try {
-      return this.favoritesService.deleteById(id, req.id);
+      return this.favoritesService.deleteById(id);
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }

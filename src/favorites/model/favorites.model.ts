@@ -1,37 +1,35 @@
-import {
-  AllowNull,
-  AutoIncrement,
-  BelongsTo,
-  Column,
-  DataType,
-  ForeignKey,
-  Model,
-  PrimaryKey,
-  Table,
-  Unique,
-} from 'sequelize-typescript';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { User } from 'src/users/model/user.model';
 
-@Table
-export class Favorites extends Model {
-  @PrimaryKey
-  @AutoIncrement
-  @Unique
-  @Column(DataType.INTEGER)
-  id: number;
+export type FavoritesDocument = HydratedDocument<Favorites>;
 
-  @Column(DataType.INTEGER)
-  user_id: number;
+@Schema()
+export class Favorites {
+  @Prop({
+    type: Types.ObjectId,
+    ref: 'User',
+  })
+  user_id: User;
 
-  @AllowNull(false)
-  @Column(DataType.TEXT)
+  @Prop({
+    type: String,
+    required: true,
+  })
   favoriteId: string;
 
-  @AllowNull(false)
-  @Column(DataType.STRING(10))
+  @Prop({
+    type: String,
+    enum: ['image', 'video', 'gifs', 'sticker'],
+    required: true,
+  })
   type: string;
 
-  @AllowNull(false)
-  @Column(DataType.TEXT)
+  @Prop({
+    type: String,
+    required: true,
+  })
   urlImage: string;
 }
+
+export const FavoritesSchema = SchemaFactory.createForClass(Favorites);
