@@ -1,10 +1,6 @@
 import { Module } from '@nestjs/common';
-import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
-
-import { User } from 'src/users/model/user.model';
-import { Saved } from 'src/saved/model/saved.model';
-import { Favorites } from 'src/favorites/model/favorites.model';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -12,17 +8,7 @@ import { Favorites } from 'src/favorites/model/favorites.model';
       envFilePath: `.env`,
       isGlobal: true,
     }),
-    SequelizeModule.forRoot({
-      dialect: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: 'dotimages',
-      synchronize: true,
-      autoLoadModels: true,
-      models: [User, Saved, Favorites],
-    }),
+    MongooseModule.forRoot(process.env.DB_LINK),
   ],
 })
 export class DatabaseModule {}

@@ -1,62 +1,40 @@
-import {
-  AllowNull,
-  BelongsTo,
-  Column,
-  DataType,
-  Default,
-  HasMany,
-  Model,
-  PrimaryKey,
-  Table,
-  Unique,
-} from 'sequelize-typescript';
-import { Favorites } from 'src/favorites/model/favorites.model';
-import { Saved } from 'src/saved/model/saved.model';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
 
-@Table
-export class User extends Model {
-  @PrimaryKey
-  @Column({
-    type: DataType.INTEGER,
-    autoIncrement: true,
-    unique: true,
-  })
-  id: number;
+export type UserDocument = HydratedDocument<User>;
 
-  @AllowNull(false)
-  @Column({
-    type: DataType.STRING(20),
+@Schema()
+export class User {
+  @Prop({
+    type: String,
+    required: true,
   })
   name: string;
 
-  @Default('')
-  @Column({
-    type: DataType.STRING(20),
+  @Prop({
+    type: String,
+    default: '',
   })
   lastname: string;
 
-  @AllowNull(false)
-  @Unique(true)
-  @Column({
-    type: DataType.STRING(50),
+  @Prop({
+    type: String,
+    unique: true,
+    required: true,
   })
   email: string;
 
-  @AllowNull(false)
-  @Column({
-    type: DataType.STRING(50),
+  @Prop({
+    type: String,
+    required: true,
   })
   password: string;
 
-  @Default('')
-  @Column({
-    type: DataType.TEXT,
+  @Prop({
+    type: String,
+    default: '',
   })
   imageUrl: string;
-
-  @HasMany(() => Saved)
-  saved: Saved[];
-
-  @HasMany(() => Favorites)
-  favorites: Favorites[];
 }
+
+export const UserSchema = SchemaFactory.createForClass(User);

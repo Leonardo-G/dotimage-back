@@ -5,7 +5,7 @@ import { SavedController } from './controller/saved.controller';
 import { SavedService } from './service/saved.service';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Saved])],
+  // imports: [SequelizeModule.forFeature([Saved])],
   controllers: [SavedController],
   providers: [SavedService],
 })

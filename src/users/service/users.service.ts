@@ -1,30 +1,29 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/sequelize';
 import { JwtService } from '@nestjs/jwt';
 
-import { User } from '../model/user.model';
 import { UserCreateDTO } from '../dto/user.dto';
 import { PasswordBcrypt } from '../utils/hashPassword';
+import { Model } from 'mongoose';
+import { User } from '../model/user.model';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(User)
-    private usersModel: typeof User,
+    @InjectModel(User.name)
+    private usersDocument: Model<User>,
     private jwtService: JwtService,
     private passwordBcrypt: PasswordBcrypt,
   ) {}
 
   async createUser({ name, lastname = '', email, password }: UserCreateDTO) {
-    const isExistUser = await this.usersModel.findOne({
-      where: { email },
-    });
+    const isExistUser = await this.usersDocument.findOne({ email });
 
     if (isExistUser) {
       throw new BadRequestException(`The email ${email} is already exists`);
     }
 
-    const user = new this.usersModel({
+    const user = new this.usersDocument({
       name,
       lastname,
       email,
@@ -37,21 +36,19 @@ export class UsersService {
       email: user.email,
       imageUrl: user.imageUrl,
       token: await this.jwtService.signAsync({
-        id: user.id,
+        id: user._id,
         name: user.name,
       }),
     };
   }
 
   async validateToken(id: string) {
-    const user = await User.findOne({
-      where: { id },
-    });
+    const user = await this.usersDocument.findById(id);
 
     if (!user) throw new BadRequestException('User does not exists');
 
     const token = await this.jwtService.signAsync({
-      id: user.id,
+      id: user._id,
       name: user.name,
     });
 
@@ -64,10 +61,7 @@ export class UsersService {
   }
 
   async loginUser(email: string, password: string) {
-    const user = await this.usersModel.findOne({
-      where: { email },
-    });
-    console.log(user);
+    const user = await this.usersDocument.findOne({ email });
     if (!user) throw new BadRequestException('User does not exists');
 
     const isCorrectPassword = this.passwordBcrypt.comparePassword(
@@ -79,7 +73,7 @@ export class UsersService {
       throw new BadRequestException('email/password incorrect');
 
     const token = await this.jwtService.signAsync({
-      id: user.id,
+      id: user._id,
       name: user.name,
     });
 

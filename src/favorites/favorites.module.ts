@@ -5,7 +5,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Favorites } from './model/favorites.model';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Favorites])],
+  // imports: [SequelizeModule.forFeature([Favorites])],
   controllers: [FavoritesController],
   providers: [FavoritesService],
 })

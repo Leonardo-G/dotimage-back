@@ -20,7 +20,6 @@ export class Saved extends Model {
   @Column(DataType.INTEGER)
   id: number;
 
-  @ForeignKey(() => User)
   @Column(DataType.INTEGER)
   user_id: number;
 
@@ -35,7 +34,4 @@ export class Saved extends Model {
   @AllowNull(false)
   @Column(DataType.TEXT)
   urlImage: string;
-
-  @BelongsTo(() => User, 'user_id')
-  user: User;
 }
