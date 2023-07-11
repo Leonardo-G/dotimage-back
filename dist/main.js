@@ -12,7 +12,8 @@ async function bootstrap() {
             enableImplicitConversion: true,
         },
     }));
-    await app.listen(3000);
+    app.enableCors();
+    await app.listen(8000);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map
